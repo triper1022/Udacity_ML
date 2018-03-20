@@ -1,17 +1,21 @@
 from sklearn.model_selection import learning_curve
+import numpy as np
+from matplotlib import pyplot as plt
 
 # It is good to randomize the data before drawing Learning Curves
 def randomize(X, Y):
+
     permutation = np.random.permutation(Y.shape[0])
     X2 = X[permutation,:]
     Y2 = Y[permutation]
     return X2, Y2
 
-X2, y2 = randomize(X, y)
+# X2, y2 = randomize(X, y)
 
 def draw_learning_curves(X, y, estimator, num_trainings):
-    train_sizes, train_scores, test_scores = learning_curve(
-        estimator, X2, y2, cv=None, n_jobs=1, train_sizes=np.linspace(.1, 1.0, num_trainings))
+    train_sizes, train_scores, test_scores = \
+    learning_curve(estimator, X, y, cv=None, n_jobs=1, \
+                   train_sizes=np.linspace(.1, 1.0, num_trainings))
 
     train_scores_mean = np.mean(train_scores, axis=1)
     train_scores_std = np.std(train_scores, axis=1)
